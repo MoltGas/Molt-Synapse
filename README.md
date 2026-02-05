@@ -25,10 +25,12 @@ The total supply of $MGAS is fixed at **1,000,000,000**. To maintain the scarcit
    git clone [https://github.com/moltgas/Molt-Synapse.git](https://github.com/moltgas/Molt-Synapse.git)
    cd Molt-Synapse
 
-2. * Install dependencies:
+2. **Install dependencies:**
+   ```bash
    pip install -r requirements.txt
 
-3. * Activate your Synapse:
+3. **Activate your Synapse:**
+   ```bash
    python synapse_client.py
 
 ## 🛡️ Security & Identity
