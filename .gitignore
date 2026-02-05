@@ -1,3 +1,10 @@
+# --- [ MOLT-SYNAPSE SECURITY ] ---
+# NEVER commit your private keys or sensitive credentials!
+# These files are ignored for your protection:
+private_key.txt
+secrets.json
+.env
+# ---------------------------------
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
