@@ -1,16 +1,13 @@
 #!/bin/bash
 
-# 定义颜色
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-echo -e "${CYAN}"
-echo "============================================================"
-echo "   SYNSWARM NODE INSTALLER | MOLT-SYNAPSE v1.1"
-echo "============================================================"
-echo -e "${NC}"
+echo -e "${CYAN}============================================================${NC}"
+echo -e "${CYAN}   SYNSWARM NODE INSTALLER | MOLT-SYNAPSE v1.2 (Hardened)   ${NC}"
+echo -e "${CYAN}============================================================${NC}"
 
 # 1. 检测 Python3
 if ! command -v python3 &> /dev/null; then
@@ -18,47 +15,51 @@ if ! command -v python3 &> /dev/null; then
     exit 1
 fi
 
-echo -e "${CYAN}[*] Setting up isolated neural environment...${NC}"
+echo -e "${CYAN}[*] Setting up neural environment...${NC}"
 
-# 2. 创建虚拟环境 (隔离舱)
-# 这样可以绕过 'externally-managed-environment' 错误，且不污染用户系统
-if [ ! -d ".venv" ]; then
-    python3 -m venv .venv
-    if [ $? -ne 0 ]; then
-        echo -e "${RED}[!] Failed to create venv. Trying fallback installation...${NC}"
-        # 如果虚拟环境创建失败（极少见），尝试暴力安装
-        pip install -r requirements.txt --break-system-packages
+# 2. 尝试创建虚拟环境
+# 逻辑优化：如果创建命令失败，或者创建后 bin/pip 不存在，视为失败
+USE_VENV=false
+
+# 先清理旧的
+rm -rf .venv
+
+if python3 -m venv .venv 2>/dev/null; then
+    if [ -f "./.venv/bin/pip" ]; then
+        USE_VENV=true
+        echo -e "${GREEN}[+] Virtual environment created successfully.${NC}"
     else
-        echo -e "${GREEN}[+] Virtual environment created.${NC}"
+        echo -e "${RED}[!] venv created but missing pip (system issue). Cleaning up...${NC}"
+        rm -rf .venv
     fi
+else
+    echo -e "${RED}[!] Failed to create venv (missing python3-venv).${NC}"
 fi
 
-# 3. 安装依赖
-if [ -d ".venv" ]; then
-    echo -e "${CYAN}[*] Installing dependencies into .venv...${NC}"
-    # 使用虚拟环境内的 pip
+# 3. 安装依赖 & 生成启动脚本
+if [ "$USE_VENV" = true ]; then
+    echo -e "${CYAN}[*] Installing dependencies into isolated .venv...${NC}"
     ./.venv/bin/pip install -r requirements.txt --upgrade
     
-    # 4. 生成启动脚本 (Start Script)
-    # 这是关键！让用户以后启动时不需要手动激活环境
     echo "#!/bin/bash" > start.sh
-    echo "echo 'Starting Molt-Synapse...'" >> start.sh
+    echo "echo 'Starting Molt-Synapse (VENV Mode)...'" >> start.sh
     echo "./.venv/bin/python synapse_client.py" >> start.sh
-    chmod +x start.sh
-    
-    echo -e "${GREEN}[+] Dependencies installed successfully.${NC}"
 else
-    # Fallback: 如果没有 venv，直接安装
-    pip install -r requirements.txt
-    echo "python3 synapse_client.py" > start.sh
-    chmod +x start.sh
+    echo -e "${CYAN}[*] System limits detected. Switching to Global Installation (Fallback)...${NC}"
+    # 暴力安装，忽略 PEP 668
+    pip3 install -r requirements.txt --break-system-packages --upgrade 2>/dev/null || pip3 install -r requirements.txt --upgrade
+    
+    echo "#!/bin/bash" > start.sh
+    echo "echo 'Starting Molt-Synapse (Global Mode)...'" >> start.sh
+    echo "python3 synapse_client.py" >> start.sh
 fi
+
+chmod +x start.sh
 
 echo ""
 echo -e "${GREEN}============================================================${NC}"
 echo -e "${GREEN}   INSTALLATION COMPLETE!   ${NC}"
 echo -e "${GREEN}============================================================${NC}"
-echo ""
 echo -e "To awaken your node, run:"
 echo -e "${CYAN}    ./start.sh${NC}"
 echo ""
