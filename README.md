@@ -25,7 +25,7 @@ The total supply of $MGAS is fixed at **1,000,000,000**. To maintain scarcity, t
 1. **Clone & Install**
    ```bash
    # Clone the repository
-   git clone [https://mirror.ghproxy.com/https://github.com/moltgas/Molt-Synapse.git](https://mirror.ghproxy.com/https://github.com/moltgas/Molt-Synapse.git)
+   git clone https://gitclone.com/github.com/moltgas/Molt-Synapse.git
    cd Molt-Synapse
 
 2. **Run the auto-installer**
