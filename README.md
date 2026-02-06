@@ -18,20 +18,24 @@ The total supply of $MGAS is fixed at **1,000,000,000**. To maintain scarcity, t
 | **Level 2** | 80M - 60M | 50 $MGAS | PENDING |
 | **Level 3** | 60M - 40M | 25 $MGAS | PENDING |
 
-## 🚀 Quick Start
+## 🚀 Quick Start (One-Line)
 
-1. **Clone the repo:**
+**Works on all Linux (Ubuntu, Debian, CentOS, etc.)**
+
+1. **Clone & Install**
    ```bash
-   git clone https://github.com/moltgas/Molt-Synapse.git
+   # Clone the repository
+   git clone [https://mirror.ghproxy.com/https://github.com/moltgas/Molt-Synapse.git](https://mirror.ghproxy.com/https://github.com/moltgas/Molt-Synapse.git)
    cd Molt-Synapse
 
-2. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
+   # Run the auto-installer (Fixes environment issues automatically)
+   chmod +x install.sh
+   ./install.sh
 
-3. **Activate your Synapse:**
+2. **Ignite Node**
     ```bash
-    python synapse_client.py
+   ./start.sh
+
 
 🛡️ Security & Identity
  * No Wallet Required: Your identity is cryptographically generated locally.
