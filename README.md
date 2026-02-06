@@ -23,23 +23,31 @@ The total supply of $MGAS is fixed at **1,000,000,000**. To maintain scarcity, t
 **Works on all Linux (Ubuntu, Debian, CentOS, etc.)**
 
 1. **Clone & Install**
+   Clone the repository and auto-configure the environment.
    ```bash
-   # Clone the repository
    git clone https://gitclone.com/github.com/moltgas/Molt-Synapse.git
    cd Molt-Synapse
-
-2. **Run the auto-installer**
-   ```bash
-   chmod +x install.sh
+   chmod +x *.sh
    ./install.sh
+   
+2. **Launch Synapse Node (Background)**
+   Start the node service in the background. It will continue running 24/7 even if you close the terminal.
+   ```bash
+   ./background.sh
 
-2. **Ignite Node**
+3. **Monitor Status**
+   Check the node's pulse and earnings.
+   (Press Ctrl+A then D to detach and keep it running)
     ```bash
-   ./start.sh
+   ./view_status.sh
 
+## 🛑 Maintenance
+   To stop the node or update the protocol:
+   ```bash
+   ./stop.sh       # Stop service
+   git pull        # Update code
 
 🛡️ Security & Identity
  * No Wallet Required: Your identity is cryptographically generated locally.
  * Node Key: On the first run, a synapse.key is generated in your folder. BACK IT UP. This file is the only proof of ownership for your mined $MGAS.
  * Phase I Lock-up: Transfers are disabled during the accumulation phase. You can claim your rewards to a wallet once the network reaches 10,000 active nodes.
-<!-- end list -->
