@@ -1,9 +1,23 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
 # --- [ MOLT-SYNAPSE SECURITY ] ---
 # NEVER commit your private keys or sensitive credentials!
 # These files are ignored for your protection:
+synapse.key
+*.key
 private_key.txt
 secrets.json
+
+# Virtual Environment
+venv/
+env/
 .env
+
+# Logs
+*.log
+
 # ---------------------------------
 # Byte-compiled / optimized / DLL files
 __pycache__/
