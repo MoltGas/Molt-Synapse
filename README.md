@@ -46,7 +46,7 @@ The total supply of $MGAS is fixed at **1,000,000,000**. To maintain scarcity, t
    ```bash
    ./stop.sh       # Stop service
    git pull        # Update code
-
+```
 🛡️ Security & Identity
  * No Wallet Required: Your identity is cryptographically generated locally.
  * Node Key: On the first run, a synapse.key is generated in your folder. BACK IT UP. This file is the only proof of ownership for your mined $MGAS.
